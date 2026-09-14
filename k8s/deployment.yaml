@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eval-node-http-min
+  labels:
+    app.kubernetes.io/name: eval-node-http-min
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: eval-node-http-min
+    app.kubernetes.io/managed-by: helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eval-node-http-min
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: eval-node-http-min
+        app.kubernetes.io/name: eval-node-http-min
+        app.kubernetes.io/component: server
+        app.kubernetes.io/part-of: eval-node-http-min
+        app.kubernetes.io/managed-by: helm
+    spec:
+      containers:
+      - name: eval-node-http-min
+        image: eval-node-http-min:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          failureThreshold: 30
+          periodSeconds: 10
