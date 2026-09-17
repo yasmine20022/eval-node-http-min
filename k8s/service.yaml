@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: eval-node-http-min
     app.kubernetes.io/component: server
     app.kubernetes.io/part-of: eval-node-http-min
-    app.kubernetes.io/managed-by: helm
+    app.kubernetes.io/managed-by: kubectl
 spec:
   type: NodePort
   selector:
