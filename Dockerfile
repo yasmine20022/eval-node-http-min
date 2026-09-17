@@ -1,10 +1,10 @@
 FROM node:20-slim
+RUN groupadd -r app && useradd -r -g app app
 WORKDIR /app
 COPY package*.json ./
 RUN npm install --only=production
 COPY . ./
-RUN groupadd -r appgroup && useradd -r -g appgroup appuser
-USER appuser
 EXPOSE 8000
-HEALTHCHECK CMD curl -f http://localhost:8000/ || exit 1
-CMD ["node","server.js"]
+HEALTHCHECK CMD curl --fail http://localhost:8000/ || exit 1
+USER app
+CMD ["node", "server.js"]
