@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prometheus
-  namespace: deploy-proj-b017a5ec773c
+  namespace: deploy-proj-e46dd8e0bd98
   labels:
     app: prometheus
 spec:
@@ -56,7 +56,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: prometheus
-  namespace: deploy-proj-b017a5ec773c
+  namespace: deploy-proj-e46dd8e0bd98
   labels:
     app: prometheus
 spec:
